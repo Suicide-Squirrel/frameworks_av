@@ -5643,13 +5643,6 @@ void ACodec::sendFormatChange() {
     if (mime == MEDIA_MIMETYPE_AUDIO_RAW && (mEncoderDelay || mEncoderPadding)) {
         int32_t channelCount;
         CHECK(mOutputFormat->findInt32("channel-count", &channelCount));
-        CHECK(mOutputFormat->findInt32("sample-rate", &sampleRate));
-        if (mSampleRate != 0 && sampleRate != 0) {
-            // avoiding 32-bit overflows in intermediate values
-            mEncoderDelay = (int32_t)((((int64_t)mEncoderDelay) * sampleRate) / mSampleRate);
-            mEncoderPadding = (int32_t)((((int64_t)mEncoderPadding) * sampleRate) / mSampleRate);
-            mSampleRate = sampleRate;
-        }
         if (mSkipCutBuffer != NULL) {
             size_t prevbufsize = mSkipCutBuffer->size();
             if (prevbufsize != 0) {
