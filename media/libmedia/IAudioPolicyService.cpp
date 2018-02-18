@@ -986,7 +986,6 @@ status_t BnAudioPolicyService::onTransact(
             audio_attributes_t attr;
             data.read(&attr, sizeof(audio_attributes_t));
             sanetizeAudioAttributes(&attr);
-            audio_io_handle_t input = (audio_io_handle_t)data.readInt32();
             audio_session_t session = (audio_session_t)data.readInt32();
             pid_t pid = (pid_t)data.readInt32();
             uid_t uid = (uid_t)data.readInt32();
@@ -1377,7 +1376,7 @@ status_t BnAudioPolicyService::onTransact(
             audio_attributes_t attributes;
             data.read(&attributes, sizeof(audio_attributes_t));
             sanetizeAudioAttributes(&attributes);
-            audio_patch_handle_t handle = AUDIO_PATCH_HANDLE_NONE;
+            audio_io_handle_t handle = {};
             status_t status = startAudioSource(&source, &attributes, &handle);
             reply->writeInt32(status);
             reply->writeInt32(handle);
